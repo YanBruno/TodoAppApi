@@ -19,8 +19,8 @@ namespace TodoApp.Infra.Src.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, customer.Email.Address),
                     new Claim(ClaimTypes.Sid, customer.Id.ToString()!),
+                    new Claim(ClaimTypes.Email, customer.Email.Address),
                     //new Claim(ClaimTypes.Role, customer.Role.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),

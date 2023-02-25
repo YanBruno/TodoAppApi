@@ -4,8 +4,9 @@ namespace TodoApp.Infra.Src.Services;
 
 public class SmsService : ISmsService
 {
-    public Task<bool> SendSmsAsync(string phoneTo, string message)
+    public async Task<bool> SendSmsAsync(string phoneTo, string message)
     {
-        throw new NotImplementedException();
+        await Task.Delay(1000);
+        return true;
     }
 }

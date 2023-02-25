@@ -21,7 +21,7 @@ namespace TodoApp.Api.Controllers
             this.customerHandler = customerHandler;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         [Authorize]
         //[Authorize(Roles = "admin")]
         public async Task<IEnumerable<Customer>> Get()
@@ -30,15 +30,22 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<Customer> Get(Guid id)
         {
             return await customerRepository.GetByIdAsync(id);
         }
 
         [HttpPost("new")]
-        [Authorize]
+        [AllowAnonymous]
         public Task<ICommandResult> New(CreateCustomerCommand command)
+        {
+            return customerHandler.HandleAsync(command);
+        }
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public Task<ICommandResult> Login(AuthenticateCustomerByEmailCommand command)
         {
             return customerHandler.HandleAsync(command);
         }

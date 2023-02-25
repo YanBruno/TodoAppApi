@@ -1,4 +1,6 @@
-﻿namespace TodoApp.Infra.Src.Scripts.SqliteScripts;
+﻿using System.Text;
+
+namespace TodoApp.Infra.Src.Scripts.SqliteScripts;
 
 public static class SqliteBootstrapScript
 {
@@ -101,5 +103,21 @@ public static class SqliteBootstrapScript
             , 1
             , "2023-01-01 23:56:34";
     """;
-    public static string GenerateScript() => $"{createTables}\n{insertDataOnTables}";
+
+    public static string GenerateScript() 
+        => BuildScript(
+                createTables
+                //, insertDataOnTables
+            );
+
+    private static string BuildScript(params string[] scripts) 
+    {
+        var script = new StringBuilder();
+        foreach (var item in scripts)
+        {
+            script.AppendLine(item);
+        }
+        return $"{script}";
+    }
+
 }

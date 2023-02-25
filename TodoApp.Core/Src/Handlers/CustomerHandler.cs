@@ -106,7 +106,7 @@ public class CustomerHandler
         if (!command.IsValid())
             return new GenericCommandResult("Comando inválido", false, null);
 
-        var customer = await customerRepository.GetByPhoneAsync(command.Email);
+        var customer = await customerRepository.GetByEmailAsync(command.Email);
 
         if (customer is null)
             return new GenericCommandResult("Usuário ou senha incorreto", false, null);

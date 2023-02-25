@@ -4,8 +4,9 @@ namespace TodoApp.Infra.Src.Services;
 
 public class EmailService : IEmailService
 {
-    public Task<bool> SendEmailAsync(string emailTo, string head, string message)
+    public async Task<bool> SendEmailAsync(string emailTo, string head, string message)
     {
-        throw new NotImplementedException();
+        await Task.Delay(1000);
+        return true;
     }
 }

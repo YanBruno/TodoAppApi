@@ -47,20 +47,13 @@ namespace TodoApp.Infra.Src.Repositories
                 , new
                 {
                     customer.Id
-                    ,
-                    customer.Name.FirstName
-                    ,
-                    customer.Name.LastName
-                    ,
-                    customer.Email.Address
-                    ,
-                    customer.Phone.CodeArea
-                    ,
-                    customer.Phone.Number
-                    ,
-                    customer.Password.Value
-                    ,
-                    customer.CreateAt
+                    , customer.Name.FirstName
+                    , customer.Name.LastName
+                    , customer.Email.Address
+                    , customer.Phone.CodeArea
+                    , customer.Phone.Number
+                    , Value = customer.Password.GetPassword()
+                    , customer.CreateAt
                 }
                 , commandType: CommandType.Text
             );
@@ -135,17 +128,32 @@ namespace TodoApp.Infra.Src.Repositories
 
         public Task<Customer> GetByEmailAsync(string customerEmail)
         {
+            return GetCustomer(SqliteGenericScripts.GetCustomerByEmail, customerEmail);
+        }
+
+        public Task<Customer> GetByIdAsync(Guid customerId)
+        {
+            return GetCustomer(SqliteGenericScripts.GetCustomerById, customerId);
+        }
+
+        public Task<Customer> GetByPhoneAsync(string customerPhone)
+        {
             throw new NotImplementedException();
         }
 
-        public async Task<Customer> GetByIdAsync(Guid customerId)
+        public Task<bool> UpdateAsync(Customer customer)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task<Customer> GetCustomer(string script, object param) 
         {
             var customers = new List<Customer>();
 
             var result = await context
                 .Connection
                 .QueryAsync<CustomerQueryResult, TodoListQueryResult, TodoItemQueryResult, CustomerQueryResult>(
-                    SqliteGenericScripts.GetCustomerById
+                    script
                     , (customerResult, todoListResult, todoItemResult) => {
 
                         var customer = customers.FirstOrDefault(c => c.Id == Guid.Parse(customerResult.usuario_id));
@@ -188,22 +196,11 @@ namespace TodoApp.Infra.Src.Repositories
 
                         return customerResult;
                     }
-                    , new { customerId }
+                    , new { param }
                     , commandType: CommandType.Text
                     , splitOn: "todo_lista_id, todo_item_id"
                 );
-
-            return customers.FirstOrDefault(c => c.Id == customerId)!;
-        }
-
-        public Task<Customer> GetByPhoneAsync(string customerPhone)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateAsync(Customer customer)
-        {
-            throw new NotImplementedException();
+            return customers.FirstOrDefault()!;
         }
     }
 }

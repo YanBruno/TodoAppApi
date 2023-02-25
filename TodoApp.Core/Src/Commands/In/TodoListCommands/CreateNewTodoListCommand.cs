@@ -9,6 +9,6 @@ public class CreateNewTodoListCommand : ICommand
 
     public bool IsValid()
     {
-        throw new NotImplementedException();
+        return true;
     }
 }

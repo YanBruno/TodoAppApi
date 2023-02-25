@@ -4,15 +4,11 @@ namespace TodoApp.Core.Src.ValueObjects
 {
     public class Password : ValueObject
     {
-        public string Value { get; private set; } = null!;
-
-        public Password()
-        {
-        }
+        private string Value { get; set; } = null!;
 
         public Password(string value)
         {
-            Value = value;
+            this.Value = value;
             AddNotifications(new RegexValidationPasswordContract(this));
         }
 
