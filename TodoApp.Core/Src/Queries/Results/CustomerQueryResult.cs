@@ -13,7 +13,7 @@ public class CustomerQueryResult : IQueryResult<Customer>
     public string ddd_celular { get; set; } = null!;
     public string numero_celular { get; set; } = null!;
     public string senha { get; set; } = null!;
-    public DateTime? create_at  { get; set; } 
+    public DateTime? create_at { get; set; }
 
     public Customer ToEntity()
     {

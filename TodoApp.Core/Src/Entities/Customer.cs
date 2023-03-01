@@ -24,7 +24,7 @@ public class Customer : Entity
 
     public IReadOnlyCollection<TodoList> Lists => (IReadOnlyCollection<TodoList>)lists;
 
-    public void AddTodoLists(params TodoList[] lists) 
+    public void AddTodoLists(params TodoList[] lists)
     {
         lists.ToList().ForEach(
             l => AddTodoList(l)

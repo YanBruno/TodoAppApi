@@ -31,16 +31,17 @@ namespace TodoApp.Infra.Src.Repositories
 
         public async Task<bool> DeleteAsync(Customer customer, Guid todoListId)
         {
-           var result = await context
-                .Connection
-                .ExecuteAsync(
-                    SqliteTodoListScript.DeleteTodoList
-                    , new {
-                        customerId = customer.Id
+            var result = await context
+                 .Connection
+                 .ExecuteAsync(
+                     SqliteTodoListScript.DeleteTodoList
+                     , new
+                     {
+                         customerId = customer.Id
                         , todoListId
-                    }
-                    , commandType: CommandType.Text
-                );
+                     }
+                     , commandType: CommandType.Text
+                 );
 
             if (result > 0) return true;
 
@@ -55,7 +56,8 @@ namespace TodoApp.Infra.Src.Repositories
                 .Connection
                 .QueryAsync<TodoListQueryResult, TodoItemQueryResult, TodoListQueryResult>(
                     SqliteTodoListScript.GetTodoLists
-                    , (todoListResult, todoItemResult) => {
+                    , (todoListResult, todoItemResult) =>
+                    {
 
                         var todoList = todoLists.FirstOrDefault(c => c.Id == Guid.Parse(todoListResult.todo_lista_id));
                         if (todoList == null)
@@ -71,7 +73,7 @@ namespace TodoApp.Infra.Src.Repositories
                         else
                         {
                             if (todoItemResult != null)
-                                todoList.AddTodoItem(todoItemResult.ToEntity());                                                        
+                                todoList.AddTodoItem(todoItemResult.ToEntity());
                         }
 
                         return todoListResult;
@@ -92,7 +94,8 @@ namespace TodoApp.Infra.Src.Repositories
                 .Connection
                 .QueryAsync<TodoListQueryResult, TodoItemQueryResult, TodoListQueryResult>(
                     SqliteTodoListScript.GetTodoLists
-                    , (todoListResult, todoItemResult) => {
+                    , (todoListResult, todoItemResult) =>
+                    {
 
                         var todoList = todoLists.FirstOrDefault(c => c.Id == Guid.Parse(todoListResult.todo_lista_id));
                         if (todoList == null)
@@ -127,7 +130,8 @@ namespace TodoApp.Infra.Src.Repositories
                 .Connection
                 .ExecuteAsync(
                     SqliteTodoListScript.UpdateTodoList
-                    , new {
+                    , new
+                    {
                         customerId = customer.Id
                         , todoListId = todoList.Id
                         , todoList.Title.Value

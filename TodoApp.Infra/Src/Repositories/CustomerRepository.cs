@@ -76,7 +76,8 @@ namespace TodoApp.Infra.Src.Repositories
                 .Connection
                 .QueryAsync<CustomerQueryResult, TodoListQueryResult, TodoItemQueryResult, CustomerQueryResult>(
                     SqliteCustomerScript.GetCustomers
-                    , (customerResult, todoListResult, todoItemResult) => {
+                    , (customerResult, todoListResult, todoItemResult) =>
+                    {
 
 
                         var customer = customers.FirstOrDefault(c => c.Id == Guid.Parse(customerResult.usuario_id));
@@ -95,23 +96,24 @@ namespace TodoApp.Infra.Src.Repositories
                             }
                             customers.Add(customer);
                         }
-                        else 
+                        else
                         {
-                            if (todoListResult != null) 
+                            if (todoListResult != null)
                             {
                                 var todoList = customer.Lists.FirstOrDefault(l => l.Id == Guid.Parse(todoListResult.todo_lista_id));
                                 if (todoList == null)
                                 {
                                     todoList = todoListResult.ToEntity();
-                                    if (todoItemResult != null) 
-                                        todoList.AddTodoItem(todoItemResult.ToEntity());
-                                    
-                                    customer.AddTodoList(todoList);
-                                }
-                                else {
                                     if (todoItemResult != null)
                                         todoList.AddTodoItem(todoItemResult.ToEntity());
-                                    
+
+                                    customer.AddTodoList(todoList);
+                                }
+                                else
+                                {
+                                    if (todoItemResult != null)
+                                        todoList.AddTodoItem(todoItemResult.ToEntity());
+
                                 }
                             }
                         }
@@ -146,7 +148,7 @@ namespace TodoApp.Infra.Src.Repositories
             throw new NotImplementedException();
         }
 
-        private async Task<Customer> GetCustomer(string script, object param) 
+        private async Task<Customer> GetCustomer(string script, object param)
         {
             var customers = new List<Customer>();
 
@@ -154,7 +156,8 @@ namespace TodoApp.Infra.Src.Repositories
                 .Connection
                 .QueryAsync<CustomerQueryResult, TodoListQueryResult, TodoItemQueryResult, CustomerQueryResult>(
                     script
-                    , (customerResult, todoListResult, todoItemResult) => {
+                    , (customerResult, todoListResult, todoItemResult) =>
+                    {
 
                         var customer = customers.FirstOrDefault(c => c.Id == Guid.Parse(customerResult.usuario_id));
                         if (customer == null)

@@ -8,7 +8,7 @@ public class TodoItemQueryResult : IQueryResult<TodoItem>
 {
     public string todo_item_id { get; set; } = null!;
     public string todo_lista_id { get; set; } = null!;
-    public string usuario_id { get; set; } = null!; 
+    public string usuario_id { get; set; } = null!;
     public string titulo { get; set; } = null!;
     public string nota { get; set; } = null!;
     public bool concluido { get; set; }

@@ -28,19 +28,19 @@ public class TodoListHandler
             return new GenericCommandResult("Comando inválido", false, null);
 
         var customer = await customerRepository.GetByIdAsync((Guid)command.CustomerId!);
-        if(customer == null)
+        if (customer == null)
             return new GenericCommandResult("Usuário inválido", false, null);
 
         var title = new Title(command.Title!);
         var todoList = new TodoList(Guid.NewGuid(), DateTime.UtcNow, title);
 
-        if(!todoList.IsValid)
+        if (!todoList.IsValid)
             return new GenericCommandResult("Ops, algo errado aconteceu", false, todoList.Notifications);
 
         customer.AddTodoList(todoList);
 
         var result = await todoListRepository.CreateAsync(customer, todoList);
-        if(!result)
+        if (!result)
             return new GenericCommandResult("Erro ao persistir dados", false, null);
 
         return new GenericCommandResult("Lista criada com sucesso", true, todoList);
@@ -56,7 +56,7 @@ public class TodoListHandler
             return new GenericCommandResult("Usuário inválido", false, null);
 
         var todoList = customer.Lists.FirstOrDefault(l => l.Id == command.TodoListId);
-        if(todoList == null)
+        if (todoList == null)
             return new GenericCommandResult("Lista de todo inválida", false, null);
 
         var title = new Title(command.Title!);

@@ -25,7 +25,7 @@ public class TodoList : Entity
     }
 
     public void UpdateTitle(Title title)
-    { 
+    {
         Title = title;
     }
 }

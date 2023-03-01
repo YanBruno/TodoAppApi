@@ -65,6 +65,6 @@ app.MapControllers();
 
 app.MapGet("/", () => "UP");
 
-app.Services.GetService<IDataBaseBootstrap>().InitialSetup();
+app.Services.GetService<IDataBaseBootstrap>()!.InitialSetup();
 
 app.Run();

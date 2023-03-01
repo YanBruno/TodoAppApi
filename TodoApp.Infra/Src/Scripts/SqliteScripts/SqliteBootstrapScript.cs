@@ -104,13 +104,13 @@ public static class SqliteBootstrapScript
             , "2023-01-01 23:56:34";
     """;
 
-    public static string GenerateScript() 
+    public static string GenerateScript()
         => BuildScript(
                 createTables
                 , insertDataOnTables
             );
 
-    private static string BuildScript(params string[] scripts) 
+    private static string BuildScript(params string[] scripts)
     {
         var script = new StringBuilder();
         foreach (var item in scripts)

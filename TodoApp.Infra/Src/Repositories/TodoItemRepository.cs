@@ -21,7 +21,8 @@ public class TodoItemRepository : DefaultConnection, ITodoItemRepository
             .Connection
             .ExecuteAsync(
                 SqliteTodoItemScript.InsertTodoItem
-                , new {
+                , new
+                {
                     todoItem.Id
                     , todoListId = todoList.Id
                     , customerId = customer.Id
@@ -65,7 +66,8 @@ public class TodoItemRepository : DefaultConnection, ITodoItemRepository
             .Connection
             .QueryAsync<TodoItemQueryResult>(
                 SqliteTodoItemScript.GetTodoItems
-                , new {
+                , new
+                {
                     todoListId
                     , customerId
                 }
@@ -73,9 +75,10 @@ public class TodoItemRepository : DefaultConnection, ITodoItemRepository
             );
 
         result.ToList().ForEach(
-            todo => {
+            todo =>
+            {
                 todos.Add(todo.ToEntity());
-            }    
+            }
         );
 
         return todos;
@@ -87,7 +90,8 @@ public class TodoItemRepository : DefaultConnection, ITodoItemRepository
             .Connection
             .QueryFirstOrDefaultAsync<TodoItemQueryResult>(
                 SqliteTodoItemScript.GetTodoItemById
-                , new {
+                , new
+                {
                     todoItemId
                     , todoListId
                     , customerId
@@ -117,7 +121,7 @@ public class TodoItemRepository : DefaultConnection, ITodoItemRepository
                     , customerId = customer.Id
                 }
                 , commandType: CommandType.Text
-            );;
+            );
 
         if (result > 0) return true;
 

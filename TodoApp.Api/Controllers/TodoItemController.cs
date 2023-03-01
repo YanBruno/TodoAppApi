@@ -24,21 +24,21 @@ public class TodoItemController : ControllerBase
 
     [HttpGet("{todoListId:guid}/{id:guid}")]
     [Authorize]
-    public Task<TodoItem> Get([FromRoute]Guid todoListId, [FromRoute]Guid id)
+    public Task<TodoItem> Get([FromRoute] Guid todoListId, [FromRoute] Guid id)
     {
-        return todoListRepository.GetByIdAsync(Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value), todoListId , id);
+        return todoListRepository.GetByIdAsync(Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value), todoListId, id);
     }
 
     [HttpGet("{todoListId:guid}/all")]
     [Authorize]
-    public Task<IEnumerable<TodoItem>> GetAll([FromRoute]Guid todoListId)
+    public Task<IEnumerable<TodoItem>> GetAll([FromRoute] Guid todoListId)
     {
         return todoListRepository.GetAllAsync(Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value), todoListId);
     }
 
     [HttpPost("new")]
     [Authorize]
-    public Task<ICommandResult> New([FromBody]CreateNewTodoItemCommand command)
+    public Task<ICommandResult> New([FromBody] CreateNewTodoItemCommand command)
     {
         command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
         return todoListHandler.HandleAsync(command);
@@ -46,7 +46,7 @@ public class TodoItemController : ControllerBase
 
     [HttpDelete]
     [Authorize]
-    public Task<ICommandResult> Delete([FromBody]DeleteTodoItemCommand command)
+    public Task<ICommandResult> Delete([FromBody] DeleteTodoItemCommand command)
     {
         command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
         return todoListHandler.HandleAsync(command);
@@ -54,7 +54,7 @@ public class TodoItemController : ControllerBase
 
     [HttpPut]
     [Authorize]
-    public Task<ICommandResult> Update([FromBody]UpdateTodoItemCommand command)
+    public Task<ICommandResult> Update([FromBody] UpdateTodoItemCommand command)
     {
         command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
         return todoListHandler.HandleAsync(command);

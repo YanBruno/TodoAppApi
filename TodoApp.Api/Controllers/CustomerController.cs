@@ -39,21 +39,21 @@ public class CustomerController : ControllerBase
 
     [HttpGet("{id:guid}")]
     [Authorize]
-    public async Task<Customer> Get([FromRoute]Guid id)
+    public async Task<Customer> Get([FromRoute] Guid id)
     {
         return await customerRepository.GetByIdAsync(id);
     }
 
     [HttpPost("new")]
     [AllowAnonymous]
-    public Task<ICommandResult> New([FromBody]CreateCustomerCommand command)
+    public Task<ICommandResult> New([FromBody] CreateCustomerCommand command)
     {
         return customerHandler.HandleAsync(command);
     }
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public Task<ICommandResult> Login([FromBody]AuthenticateCustomerByEmailCommand command)
+    public Task<ICommandResult> Login([FromBody] AuthenticateCustomerByEmailCommand command)
     {
         return customerHandler.HandleAsync(command);
     }

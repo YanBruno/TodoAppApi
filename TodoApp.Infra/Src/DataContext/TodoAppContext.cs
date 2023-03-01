@@ -8,7 +8,7 @@ public class TodoAppContext : IDisposable
 {
     public TodoAppContext()
     {
-        Connection = new (Settings.SqliteStringConnection);
+        Connection = new(Settings.SqliteStringConnection);
     }
 
     public SqliteConnection Connection { get; private set; }

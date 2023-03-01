@@ -10,5 +10,5 @@ public class CreateNewTodoItemCommand : ICommand
     public string Note { get; set; } = null!;
 
     public bool IsValid() => true;
-    
+
 }

@@ -39,14 +39,14 @@ public class TodoListController : ControllerBase
     [HttpPost("new")]
     [Authorize]
     public Task<ICommandResult> New([FromBody] CreateNewTodoListCommand command)
-    { 
+    {
         command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
         return todoListHandler.HandleAsync(command);
     }
 
     [HttpDelete]
     [Authorize]
-    public Task<ICommandResult> Delete([FromBody] DeleteTodoListCommand command) 
+    public Task<ICommandResult> Delete([FromBody] DeleteTodoListCommand command)
     {
         command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
         return todoListHandler.HandleAsync(command);
@@ -54,7 +54,7 @@ public class TodoListController : ControllerBase
 
     [HttpPut]
     [Authorize]
-    public Task<ICommandResult> Update([FromBody] UpdateTodoListCommand command) 
+    public Task<ICommandResult> Update([FromBody] UpdateTodoListCommand command)
     {
         command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
         return todoListHandler.HandleAsync(command);
