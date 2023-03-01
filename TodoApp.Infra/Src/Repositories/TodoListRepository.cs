@@ -13,7 +13,7 @@ namespace TodoApp.Infra.Src.Repositories
         public async Task<bool> CreateAsync(Customer customer, TodoList todoList)
         {
             var result = await context.Connection.ExecuteAsync(
-                SqliteGenericScripts.InsertTodoList
+                SqliteTodoListScript.InsertTodoList
                 , new
                 {
                     todoList.Id
@@ -29,9 +29,22 @@ namespace TodoApp.Infra.Src.Repositories
             return true;
         }
 
-        public Task<bool> DeleteAsync(Customer customer, Guid todoListId)
+        public async Task<bool> DeleteAsync(Customer customer, Guid todoListId)
         {
-            throw new NotImplementedException();
+           var result = await context
+                .Connection
+                .ExecuteAsync(
+                    SqliteTodoListScript.DeleteTodoLists
+                    , new {
+                        customerId = customer.Id
+                        , todoListId
+                    }
+                    , commandType: CommandType.Text
+                );
+
+            if (result > 0) return true;
+
+            return false;
         }
 
         public async Task<IEnumerable<TodoList>> GetAllAsync(Guid customerId)
@@ -39,7 +52,7 @@ namespace TodoApp.Infra.Src.Repositories
             var result = await context
                 .Connection
                 .QueryAsync<TodoListQueryResult>(
-                    SqliteGenericScripts.GetTodoLists
+                    SqliteTodoListScript.GetTodoLists
                     , new { customerId }
                     , commandType: CommandType.Text
                 );
@@ -53,14 +66,40 @@ namespace TodoApp.Infra.Src.Repositories
             return todoLists;
         }
 
-        public Task<TodoList> GetByIdAsync(Customer customer, Guid todoListId)
+        public async Task<TodoList> GetByIdAsync(Guid customerId, Guid todoListId)
         {
-            throw new NotImplementedException();
+            var result = await context
+                .Connection
+                .QueryFirstOrDefaultAsync<TodoListQueryResult>(
+                    SqliteTodoListScript.GetTodoListById
+                    , new { 
+                        customerId
+                        , todoListId
+                    }
+                    , commandType: CommandType.Text
+                );
+
+            if (result != null) return result.ToEntity();
+
+            return null!;
         }
 
-        public Task<bool> UpdateAsync(Customer customer, TodoList todoList)
+        public async Task<bool> UpdateAsync(Customer customer, TodoList todoList)
         {
-            throw new NotImplementedException();
+            var result = await context
+                .Connection
+                .ExecuteAsync(
+                    SqliteTodoListScript.UpdateTodoLists
+                    , new {
+                        customerId = customer.Id
+                        , todoListId = todoList.Id
+                        , todoList.Title.Value
+                    }
+                );
+
+            if (result > 0) return true;
+
+            return false;
         }
     }
 }

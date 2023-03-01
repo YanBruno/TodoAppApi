@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "6030f2ac-240e-441c-a7d8-8d60d9c01b44",
+		"name": "TodoApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "CreateCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"yan\",\r\n  \"lastName\": \"santos\",\r\n  \"emailAddress\": \"yanbrunosilvasantos@gmail.com.br\",\r\n  \"phoneCodeArea\": \"011\",\r\n  \"phoneNumber\": \"123456780\",\r\n  \"password\": \"Ya@12378\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/customer/new",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginByEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"yanbrunosilvasantos@gmail.com.br\",\r\n  \"Password\": \"Ya@12378\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/customer/login",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/api/v1/customer/all",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/api/v1/customer/{{customerId}}",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TodoList",
+			"item": [
+				{
+					"name": "CreateTodoList",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Title\": \"Passeios\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoList/new",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoList",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTodoLists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/api/v1/customer/all",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIwMzkwNDcxMy0wMDNjLTQzODQtYjdiOS1jMmQ0YWY1MGZiZGUiLCJlbWFpbCI6InlhbmJydW5vc2lsdmFzYW50b3NAZ21haWwuY29tLmJyIiwibmJmIjoxNjc3MzMyNDI3LCJleHAiOjE2NzczMzk2MjcsImlhdCI6MTY3NzMzMjQyN30.FHBgZkawLIwjFrZit2DHtYr_X3vN7AhR3kWrYswETKU",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "endpoint",
+			"value": "https",
+			"type": "default"
+		},
+		{
+			"key": "customerId",
+			"value": "guid",
+			"type": "default"
+		}
+	]
+}

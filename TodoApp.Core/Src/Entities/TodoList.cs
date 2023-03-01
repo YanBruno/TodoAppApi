@@ -23,4 +23,9 @@ public class TodoList : Entity
     {
         todos.Add(todoItem);
     }
+
+    public void UpdateTitle(Title title)
+    { 
+        Title = title;
+    }
 }

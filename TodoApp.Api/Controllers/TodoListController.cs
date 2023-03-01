@@ -22,6 +22,13 @@ public class TodoListController : ControllerBase
         this.todoListRepository = todoListRepository;
     }
 
+    [HttpGet("{id:guid}")]
+    [Authorize]
+    public Task<TodoList> Get(Guid id)
+    {
+        return todoListRepository.GetByIdAsync(Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value), id);
+    }
+
     [HttpGet("all")]
     [Authorize]
     public Task<IEnumerable<TodoList>> GetAll()
@@ -33,6 +40,22 @@ public class TodoListController : ControllerBase
     [Authorize]
     public Task<ICommandResult> New(CreateNewTodoListCommand command)
     { 
+        command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
+        return todoListHandler.HandleAsync(command);
+    }
+
+    [HttpDelete]
+    [Authorize]
+    public Task<ICommandResult> Delete(DeleteTodoListCommand command) 
+    {
+        command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
+        return todoListHandler.HandleAsync(command);
+    }
+
+    [HttpPut]
+    [Authorize]
+    public Task<ICommandResult> Update(UpdateTodoListCommand command) 
+    {
         command.CustomerId = Guid.Parse(User.FindFirst(ClaimTypes.Sid)!.Value);
         return todoListHandler.HandleAsync(command);
     }

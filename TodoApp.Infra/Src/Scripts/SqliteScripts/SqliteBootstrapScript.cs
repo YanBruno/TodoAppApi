@@ -107,7 +107,7 @@ public static class SqliteBootstrapScript
     public static string GenerateScript() 
         => BuildScript(
                 createTables
-                //, insertDataOnTables
+                , insertDataOnTables
             );
 
     private static string BuildScript(params string[] scripts) 

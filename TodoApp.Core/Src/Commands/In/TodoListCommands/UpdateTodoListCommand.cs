@@ -10,6 +10,6 @@ public class UpdateTodoListCommand : ICommand
 
     public bool IsValid()
     {
-        throw new NotImplementedException();
+        return true;
     }
 }

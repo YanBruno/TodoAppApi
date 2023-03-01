@@ -46,13 +46,49 @@ public class TodoListHandler
         return new GenericCommandResult("Lista criada com sucesso", true, todoList);
     }
 
-    public Task<ICommandResult> HandleAsync(UpdateTodoListCommand command)
+    public async Task<ICommandResult> HandleAsync(UpdateTodoListCommand command)
     {
-        throw new NotImplementedException();
+        if (!command.IsValid())
+            return new GenericCommandResult("Comando inválido", false, null);
+
+        var customer = await customerRepository.GetByIdAsync((Guid)command.CustomerId!);
+        if (customer == null)
+            return new GenericCommandResult("Usuário inválido", false, null);
+
+        var todoList = customer.Lists.FirstOrDefault(l => l.Id == command.TodoListId);
+        if(todoList == null)
+            return new GenericCommandResult("Lista de todo inválida", false, null);
+
+        var title = new Title(command.Title!);
+
+        todoList.UpdateTitle(title);
+
+        var result = await todoListRepository.UpdateAsync(customer, todoList);
+        if (!result)
+            return new GenericCommandResult("Erro ao persistir dados", false, null);
+
+        return new GenericCommandResult("Lista atualizada com sucesso", true, todoList);
     }
 
-    public Task<ICommandResult> HandleAsync(DeleteTodoListCommand command)
+    public async Task<ICommandResult> HandleAsync(DeleteTodoListCommand command)
     {
-        throw new NotImplementedException();
+        if (!command.IsValid())
+            return new GenericCommandResult("Comando inválido", false, null);
+
+        var customer = await customerRepository.GetByIdAsync((Guid)command.CustomerId!);
+        if (customer == null)
+            return new GenericCommandResult("Usuário inválido", false, null);
+
+        var todoList = customer.Lists.FirstOrDefault(l => l.Id == command.TodoListId);
+        if (todoList == null)
+            return new GenericCommandResult("Lista de todo inválida", false, null);
+
+        customer.RemoveTodoList(todoList);
+
+        var result = await todoListRepository.DeleteAsync(customer, (Guid)todoList.Id!);
+        if (!result)
+            return new GenericCommandResult("Erro ao persistir dados", false, null);
+
+        return new GenericCommandResult("Lista deletada com sucesso", true, null);
     }
 }

@@ -13,7 +13,7 @@ namespace TodoApp.Infra.Src.Repositories
         public async Task<bool> CheckByEmail(string email)
         {
             bool result = await context.Connection.QueryFirstOrDefaultAsync<bool>(
-                SqliteGenericScripts.CheckEmail
+                SqliteCustomerScript.CheckEmail
                 , new
                 {
                     email
@@ -27,7 +27,7 @@ namespace TodoApp.Infra.Src.Repositories
         public async Task<bool> CheckByPhone(string phoneCodeArea, string phoneNumber)
         {
             bool result = await context.Connection.QueryFirstOrDefaultAsync<bool>(
-                SqliteGenericScripts.CheckPhone
+                SqliteCustomerScript.CheckPhone
                 , new
                 {
                     phoneCodeArea
@@ -43,7 +43,7 @@ namespace TodoApp.Infra.Src.Repositories
         public async Task<bool> CreateAsync(Customer customer)
         {
             var result = await context.Connection.ExecuteAsync(
-                SqliteGenericScripts.InsertCustomer
+                SqliteCustomerScript.InsertCustomer
                 , new
                 {
                     customer.Id
@@ -75,7 +75,7 @@ namespace TodoApp.Infra.Src.Repositories
             var result = await context
                 .Connection
                 .QueryAsync<CustomerQueryResult, TodoListQueryResult, TodoItemQueryResult, CustomerQueryResult>(
-                    SqliteGenericScripts.GetCustomers
+                    SqliteCustomerScript.GetCustomers
                     , (customerResult, todoListResult, todoItemResult) => {
 
 
@@ -128,12 +128,12 @@ namespace TodoApp.Infra.Src.Repositories
 
         public Task<Customer> GetByEmailAsync(string customerEmail)
         {
-            return GetCustomer(SqliteGenericScripts.GetCustomerByEmail, customerEmail);
+            return GetCustomer(SqliteCustomerScript.GetCustomerByEmail, customerEmail);
         }
 
         public Task<Customer> GetByIdAsync(Guid customerId)
         {
-            return GetCustomer(SqliteGenericScripts.GetCustomerById, customerId);
+            return GetCustomer(SqliteCustomerScript.GetCustomerById, customerId);
         }
 
         public Task<Customer> GetByPhoneAsync(string customerPhone)

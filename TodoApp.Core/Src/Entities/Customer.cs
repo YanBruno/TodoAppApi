@@ -36,6 +36,18 @@ public class Customer : Entity
         lists.Add(todoList);
     }
 
+    public void RemoveTodoLists(params TodoList[] lists)
+    {
+        lists.ToList().ForEach(
+            l => RemoveTodoList(l)
+        );
+    }
+
+    public void RemoveTodoList(TodoList todoList)
+    {
+        lists.Remove(todoList);
+    }
+
     public void UpdateName(Name name)
     {
         Name = name;

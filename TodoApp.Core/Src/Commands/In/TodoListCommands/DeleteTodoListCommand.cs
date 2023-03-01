@@ -9,6 +9,6 @@ public class DeleteTodoListCommand : ICommand
 
     public bool IsValid()
     {
-        throw new NotImplementedException();
+        return true;
     }
 }
