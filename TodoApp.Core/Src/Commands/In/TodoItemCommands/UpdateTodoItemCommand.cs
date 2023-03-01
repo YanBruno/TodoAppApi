@@ -10,8 +10,5 @@ public class UpdateTodoItemCommand : ICommand
     public string Title { get; set; } = null!;
     public string Note { get; set; } = null!;
 
-    public bool IsValid()
-    {
-        return true;
-    }
+    public bool IsValid() => true;
 }

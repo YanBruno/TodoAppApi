@@ -13,7 +13,7 @@ public class TodoItemHandler
     , IHandler<UpdateTodoItemCommand>
     , IHandler<DeleteTodoItemCommand>
     , IHandler<ChangeTodoItemFromTodoListCommand>
-    , IHandler<UpdateTodoItemDoneCommand>
+    , IHandler<MarkTodoItemDone>
 {
     private readonly ICustomerRepository customerRepository;
     private readonly ITodoItemRepository todoItemRepository;
@@ -120,7 +120,7 @@ public class TodoItemHandler
         return new GenericCommandResult("Todo atualziado com sucesso", true, todoItem);
     }
 
-    public async Task<ICommandResult> HandleAsync(UpdateTodoItemDoneCommand command)
+    public async Task<ICommandResult> HandleAsync(MarkTodoItemDone command)
     {
         if (!command.IsValid()) return new GenericCommandResult("Comando inválido", false, null);
 
@@ -139,6 +139,6 @@ public class TodoItemHandler
 
         if (!result) return new GenericCommandResult("Erro ao persistir dados", false, null);
 
-        return new GenericCommandResult("Todo deletado com sucesso", true, todoItem);
+        return new GenericCommandResult("Todo alterado com sucesso", true, todoItem);
     }
 }

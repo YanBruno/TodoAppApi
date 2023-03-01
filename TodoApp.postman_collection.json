@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Email\": \"yanbrunosilvasantos@gmail.com.br\",\r\n  \"Password\": \"Ya@12378\"\r\n}",
+							"raw": "{\r\n  \"Email\": \"yanbrunosilvasantos@gmail.com\",\r\n  \"Password\": \"Let@12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,6 +105,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetCurrentCustomer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/api/v1/customer",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customer"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -118,7 +137,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"Title\": \"Passeios\"\r\n}",
+							"raw": "{\r\n  \"Title\": \"Contas a pagar\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -141,20 +160,269 @@
 					"response": []
 				},
 				{
-					"name": "GetTodoLists",
+					"name": "UpdateTodoList",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TodoListId\": \"{{todoListId}}\"\r\n    , \"Title\": \"Contas a pagar alterado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{endpoint}}/api/v1/customer/all",
+							"raw": "{{endpoint}}/api/v1/TodoList",
 							"host": [
 								"{{endpoint}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"customer",
+								"TodoList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTodoList",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TodoListId\": \"63c91a75-2671-4567-99d4-9f094b564971\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoList",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTodoLists",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TodoListId\": \"39baf11f-f2a7-44b2-b2bf-0247dd0bc774\"\r\n    , \"Title\": \"Contas a pagar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoList/all",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoList",
 								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTodoList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoList/{{todoListId}}",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoList",
+								"{{todoListId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TodoItem",
+			"item": [
+				{
+					"name": "CreateTodoItem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TodoListId\": \"{{todoListId}}\"\r\n    , \"Title\": \"Ituran\"\r\n    , \"Note\": \"190\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoItem/new",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoItem",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTodoItem",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TodoListId\": \"{{todoListId}}\"\r\n    , \"TodoItemId\": \"{{todoItemId}}\"\r\n    , \"Title\": \"Ituran alterado\"\r\n    , \"Note\": \"asdnasjdasjdnaskjdaskjd ... ajdnasdasod teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoItem",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoItem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DoneTodoItem",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TodoItemId\": \"{{todoItemId}}\"\r\n    , \"TodoListId\": \"{{todoListId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoItem/Done",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoItem",
+								"Done"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTodoItem",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TodoListId\": \"{{todoListId}}\"\r\n    , \"TodoItemId\": \"{{todoItemId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoItem",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoItem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTodoItems",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoItem/{{todoListId}}/all",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoItem",
+								"{{todoListId}}",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTodoItem",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{endpoint}}/api/v1/TodoItem/{{todoListId}}/{{todoItemId}}",
+							"host": [
+								"{{endpoint}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"TodoItem",
+								"{{todoListId}}",
+								"{{todoItemId}}"
 							]
 						}
 					},
@@ -168,7 +436,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiIwMzkwNDcxMy0wMDNjLTQzODQtYjdiOS1jMmQ0YWY1MGZiZGUiLCJlbWFpbCI6InlhbmJydW5vc2lsdmFzYW50b3NAZ21haWwuY29tLmJyIiwibmJmIjoxNjc3MzMyNDI3LCJleHAiOjE2NzczMzk2MjcsImlhdCI6MTY3NzMzMjQyN30.FHBgZkawLIwjFrZit2DHtYr_X3vN7AhR3kWrYswETKU",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiJhYjA3NmM4OS03YTU0LTQxZTctODM3My03ZmM5OGFlNzMyMWYiLCJlbWFpbCI6InlhbmJydW5vc2lsdmFzYW50b3NAZ21haWwuY29tIiwibmJmIjoxNjc3NjgwOTgyLCJleHAiOjE2Nzc2ODgxODIsImlhdCI6MTY3NzY4MDk4Mn0.XuCsux7Axy4fRmTQqS4xbcPUgaX7GOi-gK0asELh1N8",
 				"type": "string"
 			}
 		]
@@ -200,7 +468,12 @@
 			"type": "default"
 		},
 		{
-			"key": "customerId",
+			"key": "todoListId",
+			"value": "guid",
+			"type": "default"
+		},
+		{
+			"key": "todoItemId",
 			"value": "guid",
 			"type": "default"
 		}

@@ -34,7 +34,7 @@ namespace TodoApp.Infra.Src.Repositories
            var result = await context
                 .Connection
                 .ExecuteAsync(
-                    SqliteTodoListScript.DeleteTodoLists
+                    SqliteTodoListScript.DeleteTodoList
                     , new {
                         customerId = customer.Id
                         , todoListId
@@ -49,39 +49,76 @@ namespace TodoApp.Infra.Src.Repositories
 
         public async Task<IEnumerable<TodoList>> GetAllAsync(Guid customerId)
         {
-            var result = await context
-                .Connection
-                .QueryAsync<TodoListQueryResult>(
-                    SqliteTodoListScript.GetTodoLists
-                    , new { customerId }
-                    , commandType: CommandType.Text
-                );
-
             var todoLists = new List<TodoList>();
 
-            foreach (var todoList in result)
-            {
-                todoLists.Add(todoList.ToEntity());
-            }
+            var result = await context
+                .Connection
+                .QueryAsync<TodoListQueryResult, TodoItemQueryResult, TodoListQueryResult>(
+                    SqliteTodoListScript.GetTodoLists
+                    , (todoListResult, todoItemResult) => {
+
+                        var todoList = todoLists.FirstOrDefault(c => c.Id == Guid.Parse(todoListResult.todo_lista_id));
+                        if (todoList == null)
+                        {
+                            todoList = todoListResult.ToEntity();
+                            if (todoItemResult != null)
+                            {
+                                var todoItem = todoItemResult.ToEntity();
+                                todoList.AddTodoItem(todoItem);
+                            }
+                            todoLists.Add(todoList);
+                        }
+                        else
+                        {
+                            if (todoItemResult != null)
+                                todoList.AddTodoItem(todoItemResult.ToEntity());                                                        
+                        }
+
+                        return todoListResult;
+                    }
+                    , new { customerId }
+                    , commandType: CommandType.Text
+                    , splitOn: "todo_item_id"
+                );
+
             return todoLists;
         }
 
         public async Task<TodoList> GetByIdAsync(Guid customerId, Guid todoListId)
         {
+            var todoLists = new List<TodoList>();
+
             var result = await context
                 .Connection
-                .QueryFirstOrDefaultAsync<TodoListQueryResult>(
-                    SqliteTodoListScript.GetTodoListById
-                    , new { 
-                        customerId
-                        , todoListId
+                .QueryAsync<TodoListQueryResult, TodoItemQueryResult, TodoListQueryResult>(
+                    SqliteTodoListScript.GetTodoLists
+                    , (todoListResult, todoItemResult) => {
+
+                        var todoList = todoLists.FirstOrDefault(c => c.Id == Guid.Parse(todoListResult.todo_lista_id));
+                        if (todoList == null)
+                        {
+                            todoList = todoListResult.ToEntity();
+                            if (todoItemResult != null)
+                            {
+                                var todoItem = todoItemResult.ToEntity();
+                                todoList.AddTodoItem(todoItem);
+                            }
+                            todoLists.Add(todoList);
+                        }
+                        else
+                        {
+                            if (todoItemResult != null)
+                                todoList.AddTodoItem(todoItemResult.ToEntity());
+                        }
+
+                        return todoListResult;
                     }
+                    , new { customerId }
                     , commandType: CommandType.Text
+                    , splitOn: "todo_item_id"
                 );
 
-            if (result != null) return result.ToEntity();
-
-            return null!;
+            return todoLists.FirstOrDefault()!;
         }
 
         public async Task<bool> UpdateAsync(Customer customer, TodoList todoList)
@@ -89,7 +126,7 @@ namespace TodoApp.Infra.Src.Repositories
             var result = await context
                 .Connection
                 .ExecuteAsync(
-                    SqliteTodoListScript.UpdateTodoLists
+                    SqliteTodoListScript.UpdateTodoList
                     , new {
                         customerId = customer.Id
                         , todoListId = todoList.Id

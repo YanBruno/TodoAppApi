@@ -9,8 +9,6 @@ public class CreateNewTodoItemCommand : ICommand
     public string Title { get; set; } = null!;
     public string Note { get; set; } = null!;
 
-    public bool IsValid()
-    {
-        throw new NotImplementedException();
-    }
+    public bool IsValid() => true;
+    
 }

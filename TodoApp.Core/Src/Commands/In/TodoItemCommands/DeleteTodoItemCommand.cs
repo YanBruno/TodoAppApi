@@ -8,8 +8,5 @@ public class DeleteTodoItemCommand : ICommand
     public Guid? CustomerId { get; set; }
     public Guid? TodoListId { get; set; }
 
-    public bool IsValid()
-    {
-        throw new NotImplementedException();
-    }
+    public bool IsValid() => true;
 }
